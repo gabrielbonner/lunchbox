@@ -6,7 +6,8 @@ post '/' do
                               longitude: params[:longitude])
   if marker.save
     status 200
-    return marker.to_json
+    # return marker.to_json
+    return "Success!"
   else
     status 422
   end
