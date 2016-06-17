@@ -4,10 +4,10 @@
   post '/' do
     if request.secure?
       status 200
-      puts "secure"
+      return {response: 'SECURE REQUEST SENT, RECIEVED, AND REPLIED TO'}
     else
       status 200
-      return {response: 'DATA RECIEVED AND RESPONSE SENT'}
+      return {response: 'insecure request sent, received, and replied to'}
     end
   end
 
