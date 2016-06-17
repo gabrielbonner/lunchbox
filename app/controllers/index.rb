@@ -1,17 +1,16 @@
-# class Application < Sinatra::Base
-#   use Rack::SSL
-
-  post '/' do
-    if request.secure?
-      status 200
-      return {response: 'SECURE REQUEST SENT, RECIEVED, AND REPLIED TO'}
-    else
-      status 200
-      return {response: 'insecure request sent, received, and replied to'}
-    end
+post '/' do
+  marker = LunchboxMarker.new(name: params[:name],
+                              description: params[:description],
+                              tags: params[:tags],
+                              latitude: params[:latitude],
+                              longitude: params[:longitude])
+  if marker.save
+    status 200
+    return marker.to_json
+  else
+    status 422
   end
-
-# end
+end
 
 get '/' do
   erb :'index'

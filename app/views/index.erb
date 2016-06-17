@@ -56,8 +56,8 @@
         map.setOptions({styles: styles});
         google.maps.event.addListener(map, 'rightclick', function( event ){
           new google.maps.Marker({position: {lat: event.latLng.lat(), lng: event.latLng.lng()}, map: map});
-          var lat = event.latLng.lat();
-          var long = event.latLng.lng();
+          var latitude = event.latLng.lat();
+          var longitude = event.latLng.lng();
           $('#instructions').hide();
           $('#add-new-lunchbox-div').show();
           $('#add-new-lunchbox-div').on('click', '#add-lunchbox-btn', function(event){
@@ -74,8 +74,8 @@
             lunchbox_marker = new LunchboxMarker({name: name,
                                                 description: description,
                                                 tags: tags,
-                                                latitude: lat,
-                                                longitude: long})
+                                                latitude: latitude,
+                                                longitude: longitude})
             console.log(lunchbox_marker)  // it's aliiiiiive!
 
             $.ajax({
@@ -90,7 +90,7 @@
               })
               .fail(function(response){
                 console.log(response)
-                alert("FAIL, response = '"+response+"'")
+
               });
 
             // TODO:
