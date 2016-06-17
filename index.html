@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href='https://fonts.googleapis.com/css?family=Quicksand:700' rel='stylesheet' type='text/css'>
+    <style>
+      #map{width:60%;height:500px;margin:auto;border:solid#828C91 3px;}#legend{background:white;padding:10px;}.info-box-div{border:solid#828C91 3px;margin:30px;padding:10px;background-color:white;}#add-new-lunchbox-div{display:none;width:60%;margin:20px auto 20px auto;}input{margin-left:20px;width:50%;height:20px;}label{color:black;}body{background:linear-gradient(to bottom right,#828C91,#19ABB5);}h1{text-align:center;}*{font-family:'Quicksand',sans-serif;}#dev{font-size:2em;color:#19ABB5;}#lunchbox{font-size:2em;color:#828C91;}#title{width:60%;margin:20px auto 20px auto;}#title h1{margin:0px}#instructions{width:60%;margin:20px auto 20px auto;}a{text-decoration:none;}
+    </style>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.2.min.js"></script>
+  </head>
+  <body>
+    <div id='title' class='info-box-div'>
+      <a href="/"><h1><span id='dev'>dev</span><span id='lunchbox'>lunchbox</span></h1></a>
+    </div>
+    <div id="map">
+    </div>
+    <div id='instructions' class='info-box-div'>
+      <h1>Right click on the map to add a new lunch spot</h1>
+    </div>
+    <div class='info-box-div' id='add-new-lunchbox-div'>
+    <h4>Add information about the great lunch spot you've found!</h4>
+      <form>
+        <label for='name'>Name:</label>
+        <input type='text' autofocus placeholder="Don Miguel's Taco Shop" name='name'><br><br>
+        <label for='description'>Enter a short description:</label>
+        <input type='text' placeholder='Cali burrito is excellent, carne asade fries so-so' name='description'><br><br>
+        <label for='tags'>Enter tags separated by commas:</label>
+        <input type='text' placeholder='cheap, tacos, Mexican, $7-lunch' name='tags'><br><br>
+        <button type='submit' id='add-lunchbox-btn'>Add it to the map</button>
+        <button type='submit' id='cancel-add-lunchbox-btn'>Cancel</button>
+      </form>
+    </div>
+    <script>
+      //constructor function to save new markers
+      var LunchboxMarker = function(params){this.name = params['name'];
+                                            this.description = params['description'];
+                                            this.tags = params['tags'];
+                                            this.latitude = params['latitude'];
+                                            this.longitude = params['longitude'];}
+      function initMap() {
+        var styles = [{"featureType":"poi.school","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"poi.medical","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"transit.station.bus","stylers":[{"visibility":"off"}]},{"featureType":"poi.government","stylers":[{ "visibility":"off"}]},{"featureType":"transit.station.rail","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"labels","stylers":[{"hue":"#00e5ff"},{"color":"#19ABB5"},{"weight":1.0}]},{"featureType":"poi.sports_complex","elementType":"labels.text","stylers":[{"visibility":"off"}]}]
+        var mapDiv = document.getElementById('map');
+        var map = new google.maps.Map(mapDiv, {
+          center: {lat: 32.7154026, lng: -117.158000},
+          zoom: 18,
+          // HYBRID has satellite view with street names, can also be ROADMAP, etc...
+          mapTypeId:google.maps.MapTypeId.HYBRID
+        });
+        // 'school' icon placed on DBC
+        var marker = new google.maps.Marker({
+        position: {lat: 32.7155500, lng: -117.158000},
+        map: map,
+        icon: 'https://i.imgur.com/ltTnna4.png',
+        // dbc logo colors are cyan = #19ABB5 , grey = #828C91
+        title: 'DBC'
+        });
+        map.setOptions({styles: styles});
+        google.maps.event.addListener(map, 'rightclick', function( event ){
+          new google.maps.Marker({position: {lat: event.latLng.lat(), lng: event.latLng.lng()}, map: map});
+          var lat = event.latLng.lat();
+          var long = event.latLng.lng();
+          $('#instructions').hide();
+          $('#add-new-lunchbox-div').show();
+          $('#add-new-lunchbox-div').on('click', '#add-lunchbox-btn', function(event){
+            event.preventDefault();
+            var name = $(this).closest('form').find('input[name=name]').val();
+            var description = $(this).closest('form').find('input[name=description]').val();
+            var tags = $(this).closest('form').find('input[name=tags]').val().split(', ');
+
+            // var infowindow = new google.maps.InfoWindow({"<h3>"+name+"</h3>" +
+            //                                              "<p>Description: "+description+"</p>" +
+            //                                              "<p>Tags: "+tags+"</p>"
+            //                                             });
+
+            lunchbox_marker = new LunchboxMarker({name: name,
+                                                description: description,
+                                                tags: tags,
+                                                latitude: lat,
+                                                longitude: long})
+            console.log(lunchbox_marker)  // it's aliiiiiive!
+
+            $.ajax({
+              method: 'POST',
+              dataType: 'json',
+              url: 'http://localhost:9393',
+              data: lunchbox_marker
+            })
+              .done(function(response){
+                alert("marker was saved to db");
+                location.reload(true)
+              })
+              .fail(function(response){
+                console.log(response)
+                alert("FAIL, response = '"+response+"'")
+              });
+
+            // TODO:
+            // instance of marker is persisted to database
+            // reload page
+            // on page reload, all of the markers in the database are loaded in the map
+
+            $('#add-new-lunchbox-div').on('click', '#cancel-add-lunchbox-btn', function(event){
+              event.preventDefault();
+              location.reload(true)
+            });
+          });
+        });
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
+        async defer></script>
+  </body>
+</html>
