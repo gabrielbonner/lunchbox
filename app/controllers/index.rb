@@ -3,9 +3,10 @@
 
   post '/' do
     if request.secure?
+      status 200
       puts "secure"
     else
-      puts "params coming in =========> #{params.inspect}"
+      status 200
       return {response: 'DATA RECIEVED AND RESPONSE SENT'}
     end
   end
