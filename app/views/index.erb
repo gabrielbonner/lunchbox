@@ -3,7 +3,7 @@
   <head>
     <link href='https://fonts.googleapis.com/css?family=Quicksand:700' rel='stylesheet' type='text/css'>
     <style>
-      #map{width:60%;height:500px;margin:auto;border:solid#828C91 3px;}#legend{background:white;padding:10px;}.info-box-div{border:solid#828C91 3px;margin:30px;padding:10px;background-color:white;}#add-new-lunchbox-div{display:none;width:60%;margin:20px auto 20px auto;}input{margin-left:20px;width:50%;height:20px;}label{color:black;}html{background:linear-gradient(to bottom right,#828C91,#19ABB5);height:100%;}h1{text-align:center;}*{font-family:'Quicksand',sans-serif;}#dev{font-size:2em;color:#19ABB5;}#lunchbox{font-size:2em;color:#828C91;}#title{width:60%;margin:20px auto 20px auto;}#title h1{margin:0px}#instructions{width:60%;margin:20px auto 20px auto;}a{text-decoration:none;}
+      #map{width:60%;height:500px;margin:auto;border:solid#828C91 3px;}#legend{background:white;padding:10px;}.info-box-div{border:solid#828C91 3px;margin:30px;padding:10px;background-color:white;}#add-new-lunchbox-div{display:none;width:60%;margin:20px auto 20px auto;}input{margin-left:20px;width:50%;height:20px;}label{color:black;}html{background:linear-gradient(to bottom right,#828C91,#19ABB5);height:100%;}h1{text-align:center;}*{font-family:'Quicksand',sans-serif;}#dev{font-size:2em;color:#19ABB5;}#lunchbox{font-size:2em;color:#828C91;}#title{width:60%;margin:20px auto 20px auto;}#title h1{margin:0px}.instructions{width:35%;margin:20px auto 20px auto;display:inline-block;}a{text-decoration:none;}#instructions-container{display:flex;width:60%;margin:auto;}
     </style>
     <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.2.min.js"></script>
   </head>
@@ -13,8 +13,13 @@
     </div>
     <div id="map">
     </div>
-    <div id='instructions' class='info-box-div'>
-      <h1>Right click on the map to add a new lunch spot</h1>
+    <div id='instructions-container'>
+      <div id='instructions1' class='info-box-div instructions'>
+        <h3>Right click on the map to add a new lunch spot</h3>
+      </div>
+      <div id='instructions2' class='info-box-div instructions'>
+        <h3>Click here to sort the lunchboxes by tags</h3>
+      </div>
     </div>
     <div class='info-box-div' id='add-new-lunchbox-div'>
     <h4>Add information about the great lunch spot you've found!</h4>
@@ -58,7 +63,7 @@
           new google.maps.Marker({position: {lat: event.latLng.lat(), lng: event.latLng.lng()}, map: map});
           var latitude = event.latLng.lat();
           var longitude = event.latLng.lng();
-          $('#instructions').hide();
+          $('.instructions').hide();
           $('#add-new-lunchbox-div').show();
           $('html').css({'background':'linear-gradient(to bottom right,#828C91,#19ABB5)', 'height':'100%'});
           $('#add-new-lunchbox-div').on('click', '#add-lunchbox-btn', function(event){
@@ -77,9 +82,6 @@
                                                 tags: tags,
                                                 latitude: latitude,
                                                 longitude: longitude})
-            console.log("MARKER BEING SENT TO SERVER:")
-            console.log(lunchbox_marker)  // it's aliiiiiive!
-
             $.ajax({
               method: 'POST',
               dataType: 'json',
