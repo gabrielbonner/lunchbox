@@ -6,15 +6,18 @@ post '/' do
                               longitude: params[:longitude])
   if marker.save
     status 200
-    # return marker.to_json
-    return "Success!"
+    return marker.to_json
   else
     status 422
-    return "Fail!"
+    return "Your marker instance could not be saved, please try again."
   end
 end
 
 get '/' do
   @all_markers = LunchboxMarker.all
   erb :'index'
+end
+
+get '/markers' do
+  LunchboxMarker.all.to_json
 end

@@ -86,8 +86,9 @@
               data: lunchbox_marker
             })
               .done(function(response){
-                alert("marker was saved to db");
-                location.reload(true)
+                alert("Your marker was saved to the map");
+
+
               })
               .fail(function(response){
                 console.log(response)
@@ -95,7 +96,6 @@
               });
 
             // TODO:
-            // instance of marker is persisted to database
             // reload page
             // on page reload, all of the markers in the database are loaded in the map
 
