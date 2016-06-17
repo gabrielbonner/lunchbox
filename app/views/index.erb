@@ -3,8 +3,9 @@
   <head>
     <link href='https://fonts.googleapis.com/css?family=Quicksand:700' rel='stylesheet' type='text/css'>
     <style>
-      #map{width:60%;height:500px;margin:auto;border:solid#828C91 3px;}#legend{background:white;padding:10px;}.info-box-div{border:solid#828C91 3px;margin:30px;padding:10px;background-color:white;}#add-new-lunchbox-div{display:none;width:60%;margin:20px auto 20px auto;}input{margin-left:20px;width:50%;height:20px;}label{color:black;}html{background:linear-gradient(to bottom right,#828C91,#19ABB5);height:100%;}h1{text-align:center;}*{font-family:'Quicksand',sans-serif;}#dev{font-size:2em;color:#19ABB5;}#lunchbox{font-size:2em;color:#828C91;}#title{width:60%;margin:20px auto 20px auto;}#title h1{margin:0px}.instructions{width:35%;margin:20px auto 20px auto;display:inline-block;}a{text-decoration:none;}#instructions-container{display:flex;width:60%;margin:auto;}#sort-by-tags-div{display:none;width:60%;margin:20px auto 20px auto;}.checkbox{margin-left:50px;width:30px;display:inline-block;padding-top:10px}.chkbx-span{padding-bottom:4px;}#tags-form{padding:10px;}
-    </style>
+      #map{width:60%;height:500px;margin:auto;border:solid#828C91 3px;}#legend{background:white;padding:10px;}.info-box-div{border:solid#828C91 3px;margin:30px;padding:10px;background-color:white;}#add-new-lunchbox-div{display:none;width:60%;margin:20px auto 20px auto;}input{margin-left:20px;width:50%;height:20px;}label{color:black;}html{background:linear-gradient(to bottom right,#828C91,#19ABB5);height:100%;}h1{text-align:center;}*{font-family:'Quicksand',sans-serif;}#dev{font-size:2em;color:#19ABB5;}#lunchbox{font-size:2em;color:#828C91;}#title{width:60%;margin:20px auto 20px auto;}#title h1{margin:0px}.instructions{width:35%;margin:20px auto 20px auto;display:inline-block;}a{text-decoration:none;}#instructions-container{display:flex;width:60%;margin:auto;}#sort-by-tags-div{display:none;width:60%;margin:20px auto 20px auto;}.checkbox{margin-left:50px;width:30px;display:inline-block;padding-top:10px}.chkbx-span{padding-bottom:4px;}#tags-form{padding:10px;}input[type=checkbox]{visibility:hidden;}.slideOne{width:50px;height:10px;background:#333;margin:20px auto;border-radius:50px;display:inline-block;position:relative;box-shadow:inset 0px 1px 1px rgba(0,0,0,0.5),0px 1px 0px rgba(255,255,255,0.2);}.slideOne label{display:block;width:16px;height:16px;border-radius: 50px; transition: all .4s ease; box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);background:#fcfff4;cursor:pointer;position:absolute;top:-3px;left:-3px;box-shadow:0px 2px 5px 0px rgba(0,0,0,0.3);background:#fcfff4;background:linear-gradient(top,#fcfff4 0%,#dfe5d7 40%,#b3bead 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fcfff4',endColorstr='#b3bead',GradientType=0);}.slideOne input[type=checkbox]:checked+label{left:37px;}
+
+</style>
     <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.2.min.js"></script>
   </head>
   <body>
@@ -24,10 +25,22 @@
     <div class='info-box-div' id='sort-by-tags-div'>
       <h3>Click the tags to filter your map results</h3>
       <form id='tags-form'>
-        <input class='checkbox' type="checkbox" name="tag" value="cheap"><span class='chkbx-span'>cheap</span>
-        <input class='checkbox' type="checkbox" name="tag" value="tacos"><span class='chkbx-span'>tacos</span>
-        <input class='checkbox' type="checkbox" name="tag" value="Mexican"><span class='chkbx-span'>Mexican</span>
-        <input class='checkbox' type="checkbox" name="tag" value="$6-lunch"><span class='chkbx-span'>$6-lunch</span>
+        <div class="slideOne">
+          <input type="checkbox" value="None" id="slideOne" name="check" />
+          <label for="slideOne"></label>
+        </div><span class='chkbx-span'>cheap</span>
+        <div class="slideOne">
+          <input type="checkbox" value="None" id="slideOne" name="check" />
+          <label for="slideOne"></label>
+        </div><span class='chkbx-span'>tacos</span>
+        <div class="slideOne">
+          <input type="checkbox" value="None" id="slideOne" name="check" />
+          <label for="slideOne"></label>
+        </div><span class='chkbx-span'>Mexican</span>
+        <div class="slideOne">
+          <input type="checkbox" value="None" id="slideOne" name="check" />
+          <label for="slideOne"></label>
+        </div><span class='chkbx-span'>$6-lunch</span>
       </form>
     </div>
     <div class='info-box-div' id='add-new-lunchbox-div'>
