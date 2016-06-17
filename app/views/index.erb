@@ -60,6 +60,7 @@
           var longitude = event.latLng.lng();
           $('#instructions').hide();
           $('#add-new-lunchbox-div').show();
+          $('html').css({'background':'linear-gradient(to bottom right,#828C91,#19ABB5)', 'height':'100%'});
           $('#add-new-lunchbox-div').on('click', '#add-lunchbox-btn', function(event){
             event.preventDefault();
             var name = $(this).closest('form').find('input[name=name]').val();
@@ -87,12 +88,9 @@
             })
               .done(function(response){
                 alert("Your marker was saved to the map");
-
-
               })
               .fail(function(response){
                 console.log(response)
-
               });
 
             // TODO:
