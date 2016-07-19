@@ -13,6 +13,8 @@ gem 'thin'
 gem 'activesupport'
 gem 'activerecord'
 
+gem 'railties'
+
 gem 'rake'
 # gem 'rack-ssl'
 
